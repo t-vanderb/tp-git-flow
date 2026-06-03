@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { NotFoundException } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { PrismaService } from '../prisma.service';
+import { count } from 'console';
 
 // Mock de PrismaService — aucune base de données réelle n'est nécessaire
 const mockPrismaService = {
@@ -107,18 +108,18 @@ describe('TasksService', () => {
   // TODO (Git Flow — branche feature/add-task-stats) : implémenter getStats() dans TasksService,
   // puis décommenter et adapter ce bloc de test.
   //
-  // describe('getStats', () => {
-  //   it('retourne le total, le nombre de tâches terminées et en attente', async () => {
-  //     const tasks = [
-  //       { id: 1, title: 'Tâche 1', content: null, done: false, createdAt: new Date() },
-  //       { id: 2, title: 'Tâche 2', content: null, done: true,  createdAt: new Date() },
-  //       { id: 3, title: 'Tâche 3', content: null, done: false, createdAt: new Date() },
-  //     ];
-  //     mockPrismaService.task.findMany.mockResolvedValue(tasks);
-  //
-  //     const result = await service.getStats();
-  //
-  //     expect(result).toEqual({ total: 3, done: 1, pending: 2 });
-  //   });
-  // });
+  describe('getStats', () => {
+    it('retourne le total, le nombre de tâches terminées et en attente', async () => {
+      const tasks = [
+        { id: 1, title: 'Tâche 1', content: null, done: false, createdAt: new Date() },
+        { id: 2, title: 'Tâche 2', content: null, done: true,  createdAt: new Date() },
+        { id: 3, title: 'Tâche 3', content: null, done: false, createdAt: new Date() },
+      ];
+      mockPrismaService.task.findMany.mockResolvedValue(tasks);
+  
+      const result = await service.getStats();
+  
+      expect(result).toEqual({ total: 3, done: 1, pending: 2 });
+    });
+  });
 });

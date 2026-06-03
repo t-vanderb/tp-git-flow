@@ -40,4 +40,11 @@ export class TasksService {
     await this.findOne(id);
     return this.prisma.task.delete({ where: { id } });
   }
+
+  async getStats() {
+    const total = await this.prisma.task.count();
+    const done = await this.prisma.task.count({ where: { done: true } });
+    const pending = total - done;
+    return { "total": total, "done": done, "pending":pending };
+  }
 }

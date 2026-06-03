@@ -55,4 +55,11 @@ export class TasksController {
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.tasksService.remove(id);
   }
+
+  @ApiOperation({ summary: 'Récupérer les stats' })
+  @ApiResponse({ status: 200, description: 'Stats récupérées avec succès' })
+  @Get('stats')
+  getStats() {
+    return this.tasksService.getStats();
+  }
 }
